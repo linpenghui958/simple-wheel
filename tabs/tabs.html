@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script
+    src="../jquery.js"></script>
+</head>
+<style>
+  *{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  .tabs-head{
+    display: flex;
+  }
+  .tabs-head li{
+    list-style: none;
+    padding: 2px 4px;
+  }
+  .tabs-head li:hover{
+    border: 1px solid blue;
+  }
+  .tabs-head li.active{
+    border: 1px solid red;
+  }
+
+  .tabs .tabs-content li{
+    display: none;
+  }
+  .tabs .tabs-content li.active{
+    display:block;
+  }
+</style>
+<body>
+  <div class="tabs">
+    <ol class="tabs-head">
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+    </ol>
+    <ol class="tabs-content">
+      <li>content 1</li>
+      <li>content 2</li>
+      <li>content 3</li>
+    </ol>
+  </div>
+
+
+  <div class="tabs">
+    <ol class="tabs-head">
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+    </ol>
+    <ol class="tabs-content">
+      <li>content 1</li>
+      <li>content 2</li>
+      <li>content 3</li>
+    </ol>
+  </div>
+</body>
+<script>
+  $(function () {
+
+    function Tabs(selector) {
+      this.elem = $(selector)
+      this.init()
+      this.bindEvent()
+    }
+
+    Tabs.prototype.init = function () {
+      this.elem.each(function (index, el) {
+        $(el).find('.tabs-head > li').eq(0).addClass('active')
+        $(el).find('.tabs-content > li').eq(0).addClass('active')
+      })
+
+    }
+
+    Tabs.prototype.bindEvent = function () {
+      this.elem.on('click', '.tabs-head > li', function (el) {
+        var $li = $(el.currentTarget)
+        $li.addClass('active').siblings().removeClass('active')
+        var index = $li.index()
+        $li.closest('.tabs').find('.tabs-content>li').eq(index).addClass('active').siblings().removeClass('active')
+      })
+    }
+
+    var tabs = new Tabs('.tabs')
+
+  })
+</script>
+</html>
