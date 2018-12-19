@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Sticky</title>
+  <script src="../jquery.js"></script>
+</head>
+<style>
+  *{
+    margin: 0;
+    padding: 0;
+  }
+  main{
+    height: 1800px;
+  }
+  .topbar{
+    width: 100%;
+    height: 60px;
+    background-color: green;
+    text-align:center;
+  }
+  .sticky{
+    position: fixed;
+    opacity: .5;
+    top: 0;
+    left: 0;
+  }
+</style>
+<body>
+  <div class="topbar">
+    topbar
+  </div>
+
+  <main>
+    <p>sentence1</p>
+    <p>sentence2</p>
+    <p>sentence3</p>
+    <p>sentence4</p>
+    <p>sentence5</p>
+    <p>sentence6</p>
+    <p>sentence7</p>
+    <p>sentence8</p>
+    <p>sentence9</p>
+    <p>sentence10</p>
+    <button>sticky按钮</button>
+    <p>sentence1</p>
+    <p>sentence2</p>
+    <p>sentence3</p>
+    <p>sentence4</p>
+    <p>sentence5</p>
+  </main>
+</body>
+<script>
+  $(function () {
+    class Sticky{
+      constructor(selector, n) {
+        this.elements = $(selector)
+        this.offset = n || 0
+        this.addWrapper()
+        this.cacheOffset()
+        this.bindEvent()
+      }
+
+      addWrapper() {
+        this.elements.each((index, el) => {
+          var height = $(el).height()
+          var wrapper = $('<div class="sticky-wrapper" style="height:'+ height +'px ;"></div>')
+          $(el).wrap(wrapper)
+        })
+      }
+
+      cacheOffset() {
+        this.offsetsArr = []
+        this.elements.each((index, el) => {
+          this.offsetsArr[index] = $(el).offset()
+        })
+      }
+
+      bindEvent() {
+        $(window).on('scroll', () => {
+          var scrollY = window.scrollY
+          this.elements.each((index, el) => {
+            var $el = $(el)
+            if (scrollY + this.offset > this.offsetsArr[index].top) {
+              $el.addClass('sticky').css('top', this.offset)
+            } else {
+              $el.removeClass('sticky')
+            }
+          })
+        })
+      }
+    }
+
+    new Sticky('.topbar')
+    new Sticky('button', 60)
+  })
+</script>
+</html>
