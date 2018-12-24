@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="../jquery.js"></script>
+</head>
+<body>
+<style>
+  *{
+    padding: 0;
+    margin: 0;
+  }
+
+  .simple-slider{
+    overflow: hidden;
+  }
+  .simple-slider ol{
+    list-style: none;
+    display: flex;
+
+
+  }
+  .simple-slider ol > li img{
+    width: 200px;
+    height: 200px;
+    display: block;
+  }
+</style>
+
+  <div class="slides">
+    <ol>
+      <li><img src="" alt="" style="background-color: red;"></li>
+      <li><img src="" alt="" style="background-color: yellow;"></li>
+      <li><img src="" alt="" style="background-color: green;"></li>
+    </ol>
+  </div>
+</body>
+<script>
+  class Slider{
+    constructor(options) {
+      this.options = options
+      this.$element = $(this.options.element)
+      this.$element.addClass('simple-slider')
+      let width = this.$element.children('ol').children('li').width()
+      this.$element.width(width)
+    }
+  }
+
+  let slider = new Slider({
+    element: '.slides'
+  })
+</script>
+</html>
